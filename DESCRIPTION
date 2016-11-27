@@ -1,0 +1,20 @@
+Package: SuperFarmerRCNK
+Title: R simulation of Superfarmer game with different playing strategies.
+Version: 0.0.0.9000
+Authors@R: c(person("Rafal", "Cylwa", email = "rc332078@students.mimuw.edu.pl",
+                  role = c("aut", "cre")),
+             person("Natalia", "Kneblewska",
+                  email = "n.kneblewska@student.uw.edu.pl",
+                  role = c("aut")))
+Description: Superfarmer is a classic boardgame invented by a polish
+             mathematician Karol Borsuk. The goal of the game is to collect all
+             avialable farm animals. The the winner is the first player to do
+             this. This package is created for learning purpose for "Programowanie
+             w R i wizualizacja danych" classes at the University of Warsaw and it
+             implemets a simplified version of Superfarmer, where there is only
+             one player. Apart from the game itself we implement different strategies
+             to find one that leads to the shortest playing time.
+Depends: R (>= 3.3.0)
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
