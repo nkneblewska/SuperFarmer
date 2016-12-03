@@ -1,41 +1,41 @@
-# Ceny zwierząt
-Price <- c(1, 6, 12, 36, 72, 6, 36)
-names(Price) <-
-  c("Krolik",
-    "Owca",
-    "Swinia",
-    "Krowa",
-    "Kon",
-    "MalyPies",
-    "DuzyPies")
+# Strategia
+
+# 1. Przy ponad 10 krolikach kupujemy malego psa za kroliki.
+# 2. Przy wymianach zawsze zostawiamy w stadzie odpowiednio: do 24 krolikow, 1 owcy, 1 swini, 1 krowy, 1 konia.
+# 3. Wymieniamy nadwyzkowe zwierzeta na najdrozsze zwierze, ktorego brakuje.
+# 4. Dokupujemy drugiego malego psa przy ponad 16 krolikach, jesli nie przeszkodzi to w powyzszych wymianach.
 
 ################### Wymiany ###################
 
-DoExchange <- function(herd) {
-  # Parametry strategii: ile zwierząt zostawiamy,
-  # przy ilu królikach decydujemy się na kupno jednego lub dwóch małych psów
+DoExchange <- function(herd, price) {
+  # Parametry strategii: ile zwierzat zostawiamy,
+  # przy ilu krolikach decydujemy sie na kupno jednego lub dwoch malych psow
   animalsToExchange <- c(24, 1, 1, 1, 1, 4, 2)
   firstDogPrice <- 11
   secondDogPrice <- 17
-  animalsOverflow <- ifelse(herd > animalsToExchange, herd - animalsToExchange, 0)
-  animalsOverflowPrice <- animalsOverflow * Price
+  animalsOverflow <-
+    ifelse(herd > animalsToExchange, herd - animalsToExchange, 0)
+  animalsOverflowPrice <- animalsOverflow * price
   overflowPriceSum <- sum(animalsOverflowPrice)
   names <-
-    c("Krolik",
-      "Owca",
-      "Swinia",
-      "Krowa",
-      "Kon",
-      "MalyPies",
-      "DuzyPies")
+    c("krolik",
+      "owca",
+      "swinia",
+      "krowa",
+      "kon",
+      "maly_pies",
+      "duzy_pies")
   names(animalsOverflow) <- names
   names(animalsOverflowPrice) <- names
-  Exchange(herd,
-          overflowPriceSum,
-          animalsOverflowPrice,
-          animalsOverflow,
-          firstDogPrice,
-          secondDogPrice)
+  Exchange(
+    herd,
+    overflowPriceSum,
+    animalsOverflowPrice,
+    animalsOverflow,
+    firstDogPrice,
+    secondDogPrice,
+    price
+  )
 }
 
 Exchange <-
@@ -44,40 +44,52 @@ Exchange <-
            animalsOverflowPrice,
            animalsOverflow,
            firstDogPrice,
-           secondDogPrice) {
-    if (all(herd[c("Krolik", "Owca", "Swinia", "Krowa")] == c(0, 0, 0, 0)) &&
-        herd["MalyPies"] > 0) {
+           secondDogPrice,
+           price) {
+    if (all(herd[c("krolik", "owca", "swinia", "krowa")] == c(0, 0, 0, 0)) &&
+        herd["maly_pies"] > 0) {
       herd <- ExchangeSmallDogToRabbits(herd)
-    } else if (herd["Krolik"] >= firstDogPrice && herd["MalyPies"] < 1) {
+    } else if (herd["krolik"] >= firstDogPrice &&
+               herd["maly_pies"] < 1) {
       herd <- ExchangeRabbitsToSmallDog(herd)
-    } else if (CanBuyNewAnimals(herd, overflowPriceSum)) {
+    } else if (CanBuyNewAnimals(herd, overflowPriceSum, price)) {
       herd <-
-        ExchangeAnimals(herd, overflowPriceSum, animalsOverflowPrice, animalsOverflow)
-    } else if (overflowPriceSum >= Price["Krowa"] &&
-               herd["Krowa"] < 2) {
-      herd <- Buy("Krowa", herd, animalsOverflowPrice, animalsOverflow)
-    } else if (herd["Krolik"] >= secondDogPrice && herd["MalyPies"] < 2) {
+        ExchangeAnimals(herd,
+                        overflowPriceSum,
+                        animalsOverflowPrice,
+                        animalsOverflow,
+                        price)
+    } else if (overflowPriceSum >= price["krowa"] &&
+               herd["krowa"] < 2) {
+      herd <-
+        Buy("krowa",
+            herd,
+            animalsOverflowPrice,
+            animalsOverflow,
+            price)
+    } else if (herd["krolik"] >= secondDogPrice &&
+               herd["maly_pies"] < 2) {
       herd <- ExchangeRabbitsToSmallDog(herd)
     }
     return(herd)
   }
 
 ExchangeSmallDogToRabbits <- function(herd) {
-  herd["MalyPies"] <- herd["MalyPies"] - 1
-  herd["Krolik"] <- herd["Krolik"] + 6
+  herd["maly_pies"] <- herd["maly_pies"] - 1
+  herd["krolik"] <- herd["krolik"] + 6
   return(herd)
 }
 
 ExchangeRabbitsToSmallDog <- function(herd) {
-  herd["Krolik"] <- herd["Krolik"] - 6
-  herd["MalyPies"] <- herd["MalyPies"] + 1
+  herd["krolik"] <- herd["krolik"] - 6
+  herd["maly_pies"] <- herd["maly_pies"] + 1
   return(herd)
 }
 
-CanBuyNewAnimals <- function(herd, overflowPriceSum) {
+CanBuyNewAnimals <- function(herd, overflowPriceSum, price) {
   ret <- FALSE
-  for (animal in c("Krolik", "Owca", "Swinia", "Krowa", "Kon")) {
-    if ((overflowPriceSum > Price[animal]) && (herd[animal] == 0)) {
+  for (animal in c("krolik", "owca", "swinia", "krowa", "kon")) {
+    if (overflowPriceSum > price[animal] && herd[animal] == 0) {
       ret <- TRUE
     }
   }
@@ -88,13 +100,19 @@ ExchangeAnimals <-
   function(herd,
            overflowPriceSum,
            animalsOverflowPrice,
-           animalsOverflow) {
-    if (herd["Krolik"] == 0 && herd["Owca"] > 0) {
+           animalsOverflow,
+           price) {
+    if (herd["krolik"] == 0 && herd["owca"] > 0) {
       herd <- ExchangeSheepToRabbits(herd)
     } else {
-      for (animal in c("Kon", "Krowa", "Swinia", "Owca")) {
-        if (overflowPriceSum >= Price[animal] && herd[animal] == 0) {
-          herd <- Buy(animal, herd, animalsOverflowPrice, animalsOverflow)
+      for (animal in c("kon", "krowa", "swinia", "owca")) {
+        if (overflowPriceSum >= price[animal] && herd[animal] == 0) {
+          herd <-
+            Buy(animal,
+                herd,
+                animalsOverflowPrice,
+                animalsOverflow,
+                price)
           break()
         }
       }
@@ -103,26 +121,27 @@ ExchangeAnimals <-
   }
 
 ExchangeSheepToRabbits <- function(herd) {
-  herd["Owca"] <- herd["Owca"] - 1
-  herd["Krolik"] <- herd["Krolik"] + 6
+  herd["owca"] <- herd["owca"] - 1
+  herd["krolik"] <- herd["krolik"] + 6
   return(herd)
 }
 
 Buy <- function(animalToBuy,
                 herd,
                 animalsOverflowPrice,
-                animalsOverflow) {
-  priceToPay <- Price[animalToBuy]
-  for (animal in c("Kon", "Krowa", "Swinia", "Owca", "Krolik")) {
+                animalsOverflow,
+                price) {
+  priceToPay <- price[animalToBuy]
+  for (animal in c("kon", "krowa", "swinia", "owca", "krolik")) {
     if (priceToPay != 0) {
       if (animalsOverflowPrice[animal] >= priceToPay) {
-        if (priceToPay < Price[animal]) {
+        if (priceToPay < price[animal]) {
           herd[animal] <- herd[animal] - 1
           herd[animalToBuy] <-
-            herd[animalToBuy] + (Price[animal] / Price[animalToBuy])
+            herd[animalToBuy] + (price[animal] / price[animalToBuy])
           priceToPay <- 0
         } else {
-          herd[animal] <- herd[animal] - priceToPay / Price[animal]
+          herd[animal] <- herd[animal] - priceToPay / price[animal]
           herd[animalToBuy] <- herd[animalToBuy] + 1
           priceToPay <- 0
         }
@@ -149,22 +168,22 @@ RollDice <- function(herd) {
   return(herd)
 }
 
-# Rzuty kostką
+# Rzuty kostka
 RollGreenDice <- function() {
   sample(
     c(
-      "Krolik",
-      "Krolik",
-      "Krolik",
-      "Krolik",
-      "Krolik",
-      "Krolik",
-      "Owca",
-      "Owca",
-      "Owca",
-      "Swinia",
-      "Krowa",
-      "Wilk"
+      "krolik",
+      "krolik",
+      "krolik",
+      "krolik",
+      "krolik",
+      "krolik",
+      "owca",
+      "owca",
+      "owca",
+      "swinia",
+      "krowa",
+      "wilk"
     ),
     1
   )
@@ -173,38 +192,38 @@ RollGreenDice <- function() {
 RollRedDice <- function() {
   sample(
     c(
-      "Krolik",
-      "Krolik",
-      "Krolik",
-      "Krolik",
-      "Krolik",
-      "Krolik",
-      "Owca",
-      "Owca",
-      "Swinia",
-      "Swinia",
-      "Kon",
-      "Lis"
+      "krolik",
+      "krolik",
+      "krolik",
+      "krolik",
+      "krolik",
+      "krolik",
+      "owca",
+      "owca",
+      "swinia",
+      "swinia",
+      "kon",
+      "lis"
     ),
     1
   )
 }
 
-# Zaktualizowanie ilości zwierząt w stadzie
+# Zaktualizowanie ilosci zwierzat w stadzie
 UpdateHerd <- function(animal, quantity, herd) {
-  # Ograniczenia na liczbę zwierząt
+  # Ograniczenia na liczbe zwierzat
   limits <- c(60, 24, 20, 12, 6, 4, 2)
   names(limits) <-
-    c("Krolik",
-      "Owca",
-      "Swinia",
-      "Krowa",
-      "Kon",
-      "MalyPies",
-      "DuzyPies")
-  if (animal == "Wilk") {
+    c("krolik",
+      "owca",
+      "swinia",
+      "krowa",
+      "kon",
+      "maly_pies",
+      "duzy_pies")
+  if (animal == "wilk") {
     herd <- EatAnimalsByWolf(herd)
-  } else if (animal == "Lis") {
+  } else if (animal == "lis") {
     herd <- EatAnimalsByFox(herd)
   } else {
     herd[animal] <-
@@ -214,10 +233,10 @@ UpdateHerd <- function(animal, quantity, herd) {
 }
 
 EatAnimalsByWolf <- function(herd) {
-  if (herd["DuzyPies"] > 0) {
-    herd["DuzyPies"] <- herd["DuzyPies"] - 1
+  if (herd["duzy_pies"] > 0) {
+    herd["duzy_pies"] <- herd["duzy_pies"] - 1
   } else {
-    for (animal in c("Krolik", "Owca", "Swinia", "Krowa")) {
+    for (animal in c("krolik", "owca", "swinia", "krowa")) {
       herd[animal] <- 0
     }
   }
@@ -225,15 +244,15 @@ EatAnimalsByWolf <- function(herd) {
 }
 
 EatAnimalsByFox <- function(herd) {
-  if (herd["MalyPies"] > 0) {
-    herd["MalyPies"] <- herd["MalyPies"] - 1
+  if (herd["maly_pies"] > 0) {
+    herd["maly_pies"] <- herd["maly_pies"] - 1
   } else {
-    herd["Krolik"] <- 0
+    herd["krolik"] <- 0
   }
   return(herd)
 }
 
-# Zakończenie gry
+# Zakonczenie gry
 EndGame <- function(herd) {
   all(herd >= c(1, 1, 1, 1, 1, 0, 0))
 }
@@ -243,20 +262,30 @@ EndGame <- function(herd) {
 # Licznik
 Counter <- numeric(10000)
 
-for (j in 1 : 10000) {
-  # Stan początkowy gry
+for (j in 1:10000) {
+  # Stan poczatkowy gry
   herd <- c(0, 0, 0, 0, 0, 0, 0)
   names(herd) <-
-    c("Krolik",
-      "Owca",
-      "Swinia",
-      "Krowa",
-      "Kon",
-      "MalyPies",
-      "DuzyPies")
+    c("krolik",
+      "owca",
+      "swinia",
+      "krowa",
+      "kon",
+      "maly_pies",
+      "duzy_pies")
+  # Ceny zwierzat
+  price <- c(1, 6, 12, 36, 72, 6, 36)
+  names(price) <-
+    c("krolik",
+      "owca",
+      "swinia",
+      "krowa",
+      "kon",
+      "maly_pies",
+      "duzy_pies")
   # Gra
   while (!EndGame(herd)) {
-    herd <- DoExchange(herd)
+    herd <- DoExchange(herd, price)
     if (EndGame(herd)) {
       break
     }
@@ -264,3 +293,19 @@ for (j in 1 : 10000) {
     Counter[j] <- Counter[j] + 1
   }
 }
+
+# Wyniki, Przyklady otrzymanych wynikow:
+head(Counter)
+
+# Podstawowe statystyki:
+summary(Counter)
+
+# Wykresy (1/2)
+library(ggplot2)
+ggplot() + aes(Counter) + geom_histogram(aes(fill = ..count..), bins = 100) + labs(title =
+                                                                                     "Histogram liczby rzutow") + labs(x = "Liczba rzutow", y = "Liczba wystapien") + scale_fill_gradient("Count", low = "black", high = "steelblue3")
+
+# Wykresy (2/2)
+library(ggplot2)
+ggplot() + aes(Counter) + geom_density(fill = "steelblue3")  + labs(title =
+                                                                      "Rozklad liczby rzutow") + labs(x = "Liczba rzutow", y = "Prawdopodobienstwo")
