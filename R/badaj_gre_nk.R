@@ -1,11 +1,11 @@
-#' @title Powtórzenie gry 10000 razy
+#' @title Powtorzenie gry 10000 razy
 #'
 #' @description 
-#' Funkcja badaj_gre() powtarza grę zadaną jako parametr przy zadanej strategii
-#' 10000 razy. Funkcja wypisuje podstawowe statystyki wektora wyników przekazywanych przez grę.
+#' Funkcja badaj_gre() powtarza gre zadana jako parametr przy zadanej strategii
+#' 10000 razy. Funkcja wypisuje podstawowe statystyki wektora wynikow przekazywanych przez gre.
 #'
-#' @param gra Funkcja gry, która jest powtarzana.
-#' @param strategia Funckja implementująca strategię, którą przyjmuje gracz podczas gry.
+#' @param gra Funkcja gry, ktora jest powtarzana.
+#' @param strategia Funckja implementujaca strategie, kt�ra przyjmuje gracz podczas gry.
 #' 
 #' @export
 
