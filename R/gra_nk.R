@@ -1,3 +1,16 @@
+#' @title Wykonanie raz gry w SuperFarmera
+#'
+#' @description 
+#' Funkcja gra przeprowadza grę w SuperFarmera jedne raz przy zadanej
+#' jako parametr strategii.  Zlicza ilość rzutów kostkalimi, potrzebnych
+#' aby wygrać. Jest jeden gracz.
+#' 
+#' @param strategia Funckja implementująca strategię, którą przyjmuje gracz podczas gry.
+#' 
+#' @return liczba rzutów kostkami wykonanych do wygranej
+#' 
+#' @export
+
 gra_nk <- function(strategia) {
   herd <- c(0, 0, 0, 0, 0, 0, 0)
   names(herd) <-
@@ -8,6 +21,7 @@ gra_nk <- function(strategia) {
       "kon",
       "maly_pies",
       "duzy_pies")
+  counter <- 0
   # Gra
   while (!EndGame(herd)) {
     herd <- strategia(herd)
@@ -15,8 +29,13 @@ gra_nk <- function(strategia) {
       break
     }
     herd <- RollDice(herd)
+    counter <- counter + 1
   }
+  return(counter)
 }
+
+
+
 
 ################### Rozgrywka ###################
 

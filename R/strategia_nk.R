@@ -1,11 +1,13 @@
-# Strategia
-
-# 1. Przy ponad 10 krolikach kupujemy malego psa za kroliki.
-# 2. Przy wymianach zawsze zostawiamy w stadzie odpowiednio: do 24 krolikow, 1 owcy, 1 swini, 1 krowy, 1 konia.
-# 3. Wymieniamy nadwyzkowe zwierzeta na najdrozsze zwierze, ktorego brakuje.
-# 4. Dokupujemy drugiego malego psa przy ponad 16 krolikach, jesli nie przeszkodzi to w powyzszych wymianach.
-
-################### Wymiany ###################
+#' @title Strategia gry w SuperFarmera
+#'
+#' @description 
+#' Funkcja strategia dokonuje wymian zwierząt na podstawie obecnego stanu stada.
+#' 
+#' @param herd Obecny stan stada gracza.
+#' 
+#' @return stan stada po wymianach
+#' 
+#' @export
 
 strategia_nk <- function(herd) {
   # Ceny zwierzat
@@ -20,6 +22,7 @@ strategia_nk <- function(herd) {
       "duzy_pies")
   DoExchange(herd, price)
 }
+
 
 DoExchange <- function(herd, price) {
   # Parametry strategii: ile zwierzat zostawiamy,
