@@ -105,7 +105,7 @@ ExchangeRabbitsToSmallDog <- function(herd) {
 CanBuyNewAnimals <- function(herd, overflowPriceSum, price) {
   ret <- FALSE
   for (animal in c("krolik", "owca", "swinia", "krowa", "kon")) {
-    if (overflowPriceSum > price[animal] && herd[animal] == 0) {
+    if (overflowPriceSum >= price[animal] && herd[animal] == 0) {
       ret <- TRUE
     }
   }
