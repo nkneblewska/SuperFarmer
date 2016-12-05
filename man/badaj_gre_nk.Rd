@@ -2,17 +2,17 @@
 % Please edit documentation in R/badaj_gre_nk.R
 \name{badaj_gre_nk}
 \alias{badaj_gre_nk}
-\title{Powtórzenie gry 10000 razy}
+\title{Powtorzenie gry 10000 razy}
 \usage{
 badaj_gre_nk(gra, strategia)
 }
 \arguments{
-\item{gra}{Funkcja gry, która jest powtarzana.}
+\item{gra}{Funkcja gry, ktora jest powtarzana.}
 
-\item{strategia}{Funckja implementująca strategię, którą przyjmuje gracz podczas gry.}
+\item{strategia}{Funckja implementujaca strategie, ktora przyjmuje gracz podczas gry.}
 }
 \description{
-Funkcja badaj_gre() powtarza grę zadaną jako parametr przy zadanej strategii
-10000 razy. Funkcja wypisuje podstawowe statystyki wektora wyników przekazywanych przez grę.
+Funkcja badaj_gre() powtarza gre zadana jako parametr przy zadanej strategii
+10000 razy. Funkcja wypisuje podstawowe statystyki wektora wynikow przekazywanych przez gre.
 }
 

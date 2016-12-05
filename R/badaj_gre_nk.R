@@ -5,7 +5,7 @@
 #' 10000 razy. Funkcja wypisuje podstawowe statystyki wektora wynikow przekazywanych przez gre.
 #'
 #' @param gra Funkcja gry, ktora jest powtarzana.
-#' @param strategia Funckja implementujaca strategie, która przyjmuje gracz podczas gry.
+#' @param strategia Funckja implementujaca strategie, ktora przyjmuje gracz podczas gry.
 #' 
 #' @export
 
@@ -15,7 +15,7 @@ badaj_gre_nk <- function(gra, strategia) {
     counter[j] <- gra(strategia)
   }
   # Wyniki, Przyklady otrzymanych wynikow:
-  head(counter)
+  # head(counter)
   # Podstawowe statystyki:
   summary(counter)
 }

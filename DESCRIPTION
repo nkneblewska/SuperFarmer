@@ -1,5 +1,5 @@
 Package: SuperFarmerRCNK
-Title: R simulation of Superfarmer game with different playing strategies.
+Title: R simulation of Superfarmer game with different playing strategies
 Version: 0.0.0.9000
 Authors@R: c(person("Rafal", "Cylwa", email = "rc332078@students.mimuw.edu.pl",
                   role = c("aut", "cre")),

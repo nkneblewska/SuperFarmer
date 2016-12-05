@@ -5,7 +5,7 @@
 #' jako parametr strategii.  Zlicza ilosc rzutow kostkami potrzebnych,
 #' aby wygrac. Jest jeden gracz.
 #'
-#' @param strategia Funckja implementujaca strategie, która przyjmuje gracz podczas gry.
+#' @param strategia Funckja implementujaca strategie, ktora przyjmuje gracz podczas gry.
 #'
 #' @return Liczba rzutow kostkami wykonanych do wygranej.
 #'
