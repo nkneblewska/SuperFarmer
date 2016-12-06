@@ -268,9 +268,12 @@ test_that("Testowanie strategii: wymiana nadwyzki na owce", {
 })
 
 test_that("Testowanie gry: wynik jest poprawny",{
-  ret <- gra_nk(strategia_nk)
-  expect_true(is.numeric(ret))
-  expect_gte(ret, 0)
+  ret1 <- gra_nk(strategia_nk)
+  ret2 <- gra_nk(ruch_gracz_anty_yolo)
+  expect_true(is.numeric(ret1))
+  expect_true(is.numeric(ret2))
+  expect_gte(ret1, 0)
+  expect_gte(ret2, 0)
 })
 
 # Zbyt dlugi czas wykonania na Unit Test
@@ -294,4 +297,13 @@ test_that("Testowanie badaj gre: bledne parametry",{
   expect_error(badaj_gre_nk())
   expect_error(badaj_gre_nk(gra_nk))
   expect_error(badaj_gre_nk(strategia_nk))
+})
+
+
+test_that("Testowanie kup_zwierze: czy nie kupuje jeœli nie staæ",{
+  example1 <- c(4, 0, 0, 0, 0, 0, 1)
+  expect_equal(kup_zwierze_yolo(4, example1), example1)
+  example2 <- c(0, 1, 0, 0, 0, 0, 1)
+  expect_equal(kup_zwierze_yolo(7, example2), example1)
+
 })

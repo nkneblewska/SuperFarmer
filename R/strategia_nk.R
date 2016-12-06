@@ -1,12 +1,12 @@
-#' @title Strategia gry w Super Farmera
+#' @title Strategia gry w SuperFarmera
 #'
-#' @description
-#' Funkcja strategia dokonuje wymian zwierzat na podstawie obecnego stanu stada.
-#'
+#' @description 
+#' Funkcja strategia dokonuje wymian zwierząt na podstawie obecnego stanu stada.
+#' 
 #' @param herd Obecny stan stada gracza.
-#'
-#' @return Stan stada po wymianach.
-#'
+#' 
+#' @return stan stada po wymianach
+#' 
 #' @export
 
 strategia_nk <- function(herd) {
@@ -22,6 +22,7 @@ strategia_nk <- function(herd) {
       "duzy_pies")
   DoExchange(herd, price)
 }
+
 
 DoExchange <- function(herd, price) {
   # Parametry strategii: ile zwierzat zostawiamy,
@@ -105,7 +106,7 @@ ExchangeRabbitsToSmallDog <- function(herd) {
 CanBuyNewAnimals <- function(herd, overflowPriceSum, price) {
   ret <- FALSE
   for (animal in c("krolik", "owca", "swinia", "krowa", "kon")) {
-    if (overflowPriceSum >= price[animal] && herd[animal] == 0) {
+    if (overflowPriceSum > price[animal] && herd[animal] == 0) {
       ret <- TRUE
     }
   }

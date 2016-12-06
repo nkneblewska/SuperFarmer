@@ -7,14 +7,14 @@
 gra_nk(strategia)
 }
 \arguments{
-\item{strategia}{Funckja implementujaca strategie, ktora przyjmuje gracz podczas gry.}
+\item{strategia}{Funckja implementująca strategię, którą przyjmuje gracz podczas gry.}
 }
 \value{
-Liczba rzutow kostkami wykonanych do wygranej.
+liczba rzutów kostkami wykonanych do wygranej
 }
 \description{
-Funkcja gra przeprowadza gre w Super Farmera jeden raz przy zadanej
-jako parametr strategii.  Zlicza ilosc rzutow kostkami potrzebnych,
-aby wygrac. Jest jeden gracz.
+Funkcja gra przeprowadza grę w SuperFarmera jedne raz przy zadanej
+jako parametr strategii.  Zlicza ilość rzutów kostkalimi, potrzebnych
+aby wygrać. Jest jeden gracz.
 }
 

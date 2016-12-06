@@ -2,7 +2,7 @@
 % Please edit documentation in R/strategia_nk.R
 \name{strategia_nk}
 \alias{strategia_nk}
-\title{Strategia gry w Super Farmera}
+\title{Strategia gry w SuperFarmera}
 \usage{
 strategia_nk(herd)
 }
@@ -10,9 +10,9 @@ strategia_nk(herd)
 \item{herd}{Obecny stan stada gracza.}
 }
 \value{
-Stan stada po wymianach.
+stan stada po wymianach
 }
 \description{
-Funkcja strategia dokonuje wymian zwierzat na podstawie obecnego stanu stada.
+Funkcja strategia dokonuje wymian zwierząt na podstawie obecnego stanu stada.
 }
 

@@ -1,11 +1,11 @@
-#' @title Powtorzenie gry 10000 razy
+#' @title Powtórzenie gry 10000 razy
 #'
 #' @description 
-#' Funkcja badaj_gre() powtarza gre zadana jako parametr przy zadanej strategii
-#' 10000 razy. Funkcja wypisuje podstawowe statystyki wektora wynikow przekazywanych przez gre.
+#' Funkcja badaj_gre() powtarza grę zadaną jako parametr przy zadanej strategii
+#' 10000 razy. Funkcja wypisuje podstawowe statystyki wektora wyników przekazywanych przez grę.
 #'
-#' @param gra Funkcja gry, ktora jest powtarzana.
-#' @param strategia Funckja implementujaca strategie, ktora przyjmuje gracz podczas gry.
+#' @param gra Funkcja gry, która jest powtarzana.
+#' @param strategia Funckja implementująca strategię, którą przyjmuje gracz podczas gry.
 #' 
 #' @export
 
@@ -15,7 +15,7 @@ badaj_gre_nk <- function(gra, strategia) {
     counter[j] <- gra(strategia)
   }
   # Wyniki, Przyklady otrzymanych wynikow:
-  # head(counter)
+  head(counter)
   # Podstawowe statystyki:
   summary(counter)
 }

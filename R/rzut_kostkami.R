@@ -1,3 +1,8 @@
+#' @title Funkcja rzucaj¹ca kostkami gry Super Farmer
+#'
+#' 
+#' @export
+
 rzut_kostkami <- function() {
   zielona <-
     rzut_jedna_kostka(wektor_zielonej_kostki)
