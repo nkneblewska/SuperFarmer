@@ -304,6 +304,6 @@ test_that("Testowanie kup_zwierze: czy nie kupuje jeœli nie staæ",{
   example1 <- c(4, 0, 0, 0, 0, 0, 1)
   expect_equal(kup_zwierze_yolo(4, example1), example1)
   example2 <- c(0, 1, 0, 0, 0, 0, 1)
-  expect_equal(kup_zwierze_yolo(7, example2), example1)
+  expect_equal(kup_zwierze_yolo(7, example2), example2)
 
 })

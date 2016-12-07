@@ -7,7 +7,7 @@
 #' @return Wektor bêd¹cy stanem stada gracza po wykonaniu ruchu
 #' @export
 
-ruch_gracz_yolo <- function(wektor_gracza) {
+strategia_yolo <- function(wektor_gracza) {
   #znajdujemy najstarsze zwierze, ktorego nie mamy i staramy sie je kupic
   i <- 5
   wartosc_zwierzat <- c(R = 1, S = 6, P = 12, C = 36, H = 72, SD = 6, BD = 36)

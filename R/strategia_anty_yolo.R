@@ -9,9 +9,9 @@
 #' 
 #' @export
 
-ruch_gracz_anty_yolo <- function (stan_gracza) {
+strategia_anty_yolo <- function (stan_gracza) {
   if (stan_gracza["maly_pies"] == 1 && stan_gracza["duzy_pies"] == 1) {
-    return (ruch_gracz_yolo(stan_gracza))
+    return (strategia_yolo(stan_gracza))
   } else {
     return (ruch_gracz_anty_yolo_zakup_psow(stan_gracza))
   }

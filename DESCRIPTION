@@ -17,7 +17,7 @@ Description: Superfarmer is a classic boardgame invented by a polish
 Depends:
     R (>= 3.3.0)
 License: GPL-2
-Encoding: UTF-8
+Encoding: cp1252
 LazyData: true
 RoxygenNote: 5.0.1
 Suggests: testthat
